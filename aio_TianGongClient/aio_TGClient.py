@@ -86,6 +86,7 @@ class TiangongClient:
             await self.wait_access()
         url = "https://neice.tiangong.cn/api/v1/chat/chat"
         data = {"data": {"content": question, "session_id": session_id}}
+        repeat = 0
         while True:
             async with aiohttp.ClientSession(headers=self.headers) as session:
                 async with session.post(url, json=data) as response:
@@ -94,7 +95,9 @@ class TiangongClient:
                         id = response_json["resp_data"]["result_message"]["message_id"]
                         return id
                     except:
-                        pass
+                        repeat += 1
+                        if repeat > 3:
+                            raise Exception("发送消息时多次出错")
                     
     async def get_msg(self,message_id):
         # self.verified = await self.verify()
