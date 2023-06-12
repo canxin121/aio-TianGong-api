@@ -2,7 +2,7 @@ import aiohttp
 import asyncio
 import json
 
-class TiangongClient:
+class TiangongBot:
     def __init__(self, cookie, token, invite_token):
         self.token = token
         self.cookie = cookie
@@ -41,7 +41,7 @@ class TiangongClient:
         async with aiohttp.ClientSession(headers=self.headers) as session:
             async with session.post(url, json=data) as response:
                 response_data = await response.json()
-                # print(f"verify : {response_data}")
+                print(f"verify : {response_data}")
                 if response_data["code"] == 200:
                     self.verified =  True
                     return True
@@ -61,7 +61,7 @@ class TiangongClient:
                     try:
                         # percent = response_data["resp_data"]["wait_percent"]
                         success = response_data["resp_data"]["success"]
-                        invite_token = response_data["resp_data"]["invite_token"]
+                        invite_token = "Bearer " + response_data["resp_data"]["invite_token"]
                         if success and invite_token:
                             with open("./invite_token.txt", "w") as f:
                                 f.write(invite_token)

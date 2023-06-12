@@ -1,7 +1,8 @@
 # aio-TianGong-api
  昆仑天工api，提供aiohttp的异步client
 
-> 现在未成功验证自动刷新INVITE_TOKEN是否可用，因为其未过期的情况下没法测试，而过期要等一段时间
+ 现在存在一个严重的问题没有解决，过一段时间后Invitetoken会过期，提示等待但无法成功
+
 ```python
 import asyncio
 from aio_TianGongClient import aio_TGClient
